@@ -21,7 +21,10 @@ num_posts = 1000
 # Fetch posts
 posts_data = []
 for post in reddit.subreddit(subreddits).hot(limit=num_posts):
-    tags = [token for token in crypto_tokens if token.lower() in post.title.lower() or token.lower() in post.selftext.lower()]
+    tags = [token for token in crypto_tokens if token.lower() in post.title.lower().split(" ") or token.lower() in post.selftext.lower().split(" ")]
+    content = post.selftext if post.is_self else None
+    if content:
+        content = " ".join(content.split())
     posts_data.append({
         "Title": post.title,
         "URL": post.url,
@@ -32,10 +35,11 @@ for post in reddit.subreddit(subreddits).hot(limit=num_posts):
         "Author": str(post.author),
         "Created At": post.created_utc,
         "Tags": ", ".join(tags) if tags else None,
+        "Content": content
     })
 
 # Create a DataFrame and save to CSV
 df = pd.DataFrame(posts_data)
-df.to_csv("reddit_crypto_posts.csv", index=False)
+df.to_csv("reddit_crypto_posts_2.csv", index=False)
 
 print("CSV file 'reddit_crypto_posts.csv' has been created successfully.")
