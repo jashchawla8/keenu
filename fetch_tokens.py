@@ -68,11 +68,5 @@ for token in crypto_data:
 df_processed = pd.DataFrame(processed_data)
 
 # Save the processed DataFrame to a CSV file
-df_processed.to_csv('top_1000_crypto_tokens_processed.csv', index=False)
-
-# Save Data to CSV File
-
-# Use pandas to save the extracted data to a CSV file
-df_processed.to_csv('top_1000_crypto_tokens_processed.csv', index=False)
-
+df_processed.to_csv('top_1000_tokens.csv', index=False)
 df_processed['name'].to_csv('top_1000_crypto_tokens_names.csv', index=False)
